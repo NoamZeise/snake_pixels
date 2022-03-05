@@ -1,4 +1,6 @@
 # snake_pixels
+play the game [here](https://noamzeise.itch.io/snake-pixels)
+
 basic snake game made with the rust library [pixels](https://crates.io/crates/pixels).
 
 main.rs uses code from the [pixels web example](https://github.com/parasyte/pixels/tree/main/examples/minimal-web)

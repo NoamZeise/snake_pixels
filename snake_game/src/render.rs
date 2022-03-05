@@ -12,6 +12,14 @@ pub fn background(frame: &mut [u8], colour: &[u8;4]) {
     }
 }
 
+pub fn pixel(frame_info: FrameInfo, frame: &mut [u8], x: u32, y: u32, colour: &[u8;4]) {
+    if x >= frame_info.width ||
+       y >= frame_info.height {
+           return;
+    }
+    for i in 0..3 { frame[((frame_info.width * y * 4) + x*4) as usize + i] = colour[i]; }
+}
+
 pub fn rect(frame_info: FrameInfo, frame: &mut [u8], rect: shapes::Rect, colour: &[u8;4]) {
     if rect.pos.x > (frame_info.width as f64) ||
        rect.pos.x + rect.dim.x < 0.0          ||
@@ -19,7 +27,12 @@ pub fn rect(frame_info: FrameInfo, frame: &mut [u8], rect: shapes::Rect, colour:
        rect.pos.y + rect.dim.y < 0.0            {
            return;
      }
-
+    for x in 0..(rect.dim.x) as u32 {
+        for y in 0..(rect.dim.y) as u32 {
+            pixel(frame_info, frame, (rect.pos.x + 0.5)as u32 + x,(rect.pos.y + 0.5)as u32 + y, colour);
+        }
+    }
+    /*
     for (i, pixel) in frame.chunks_exact_mut(4).enumerate() {
         if rect.contains(
             shapes::Vector2 {
@@ -27,7 +40,7 @@ pub fn rect(frame_info: FrameInfo, frame: &mut [u8], rect: shapes::Rect, colour:
                 y: (i / frame_info.width as usize) as f64 + 0.5} ) {
             pixel.copy_from_slice(colour);
         }
-    }
+    }*/
 }
 
 /*
